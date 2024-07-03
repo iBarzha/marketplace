@@ -1,0 +1,13 @@
+<h1>Watches</h1>
+
+<% @watches.each do |watch| %>
+  <div>
+    <h2><%= link_to watch.name, watch %></h2>
+    <p><%= watch.brand %></p>
+    <p><%= number_to_currency(watch.price) %></p>
+  </div>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= link_to 'New Watch', new_watch_path %>
+<% end %>

@@ -1,0 +1,36 @@
+<h1><%= @watch.name %></h1>
+<p>Brand: <%= @watch.brand %></p>
+<p>Price: <%= number_to_currency(@watch.price) %></p>
+<p>Description: <%= @watch.description %></p>
+<p>Condition: <%= @watch.condition %></p>
+
+<% if user_signed_in? && current_user == @watch.user %>
+  <%= link_to 'Edit', edit_watch_path(@watch) %>
+  <%= link_to 'Delete', @watch, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+
+<h2>Reviews</h2>
+<% @watch.reviews.each do |review| %>
+  <div>
+    <p><strong><%= review.user.name %>:</strong> <%= review.rating %> stars</p>
+    <p><%= review.comment %></p>
+  </div>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= form_with(model: [@watch, @watch.reviews.build]) do |form| %>
+    <div>
+      <%= form.label :rating %>
+      <%= form.number_field :rating %>
+    </div>
+    <div>
+      <%= form.label :comment %>
+      <%= form.text_area :comment %>
+    </div>
+    <%= form.submit 'Add Review' %>
+  <% end %>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= link_to 'Order this Watch', orders_path(watch_id: @watch.id), method: :post %>
+<% end %>
