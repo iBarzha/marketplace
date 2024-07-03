@@ -1,0 +1,22 @@
+<h1>Admin Dashboard</h1>
+
+<h2>Users</h2>
+<% @users.each do |user| %>
+  <div>
+    <p><%= user.name %> (<%= user.email %>)</p>
+  </div>
+<% end %>
+
+<h2>Watches</h2>
+<% @watches.each do |watch| %>
+  <div>
+    <p><%= link_to watch.name, watch %> - <%= watch.brand %></p>
+  </div>
+<% end %>
+
+<h2>Orders</h2>
+<% @orders.each do |order| %>
+  <div>
+    <p>Order ID: <%= order.id %> - <%= link_to order.watch.name, order.watch %> - <%= number_to_currency(order.total_price) %></p>
+  </div>
+<% end %>
